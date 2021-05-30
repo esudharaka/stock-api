@@ -1,8 +1,7 @@
 import { ProductDto } from '../dto/product.dto';
-import {Product, ProductInstance} from "../../db/models/product.model";
+import { Product, ProductInstance } from "../../db/models/product.model";
 import { Brand } from "../../db/models/brand.model";
-import {BrandDto} from "../dto/brand.dto";
-import {PatchUserDto} from "../dto/patch.user.dto";
+import { BrandDto } from "../dto/brand.dto";
 
 
 
@@ -37,11 +36,13 @@ class ProductsDao {
             CREATED_DATE_TS: new Date(),
             UPDATED_DATE_TS: new Date(),
         });
-        console.log(createdProduct);
 
         return createdProduct.ID;
     }
 
+    /**
+     * TODO configure the logger to log the queries and remove the console log
+     */
     async getAllProducts() {
         const products = await Product.findAll({
             include: [
@@ -96,26 +97,6 @@ class ProductsDao {
         return result;
     }
 
-    async patchUserById(userId: string, user: PatchUserDto) {
-        // const objIndex = this.users.findIndex(
-        //     (obj: { id: string }) => obj.id === userId
-        // );
-        // let currentUser = this.users[objIndex];
-        // const allowedPatchFields = [
-        //     'password',
-        //     'firstName',
-        //     'lastName',
-        //     'permissionLevel',
-        // ];
-        // for (let field of allowedPatchFields) {
-        //     if (field in user) {
-        //         // @ts-ignore
-        //         currentUser[field] = user[field];
-        //     }
-        // }
-        // this.users.splice(objIndex, 1, currentUser);
-        // return `${user.id} patched`;
-    }
 
     async deleteProductById(productId: number) {
         const result = await Product.destroy({
@@ -126,17 +107,6 @@ class ProductsDao {
         return  result;
     }
 
-    async getUserByEmail(email: string) {
-        // const objIndex = this.users.findIndex(
-        //     (obj: { email: string }) => obj.email === email
-        // );
-        // let currentUser = this.users[objIndex];
-        // if (currentUser) {
-        //     return currentUser;
-        // } else {
-        //     return null;
-        // }
-    }
 }
 
 export default new ProductsDao();

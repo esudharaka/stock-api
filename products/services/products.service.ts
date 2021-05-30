@@ -1,8 +1,6 @@
 import ProductsDao from '../daos/products.dao';
 import { CRUD } from '../../common/interfaces/crud.interface';
 import { ProductDto } from '../dto/product.dto';
-import { PatchUserDto } from "../dto/patch.user.dto";
-import { PutUserDto } from "../dto/put.user.dto";
 import { ProductQueryParams, QueryParams } from "../../common/interfaces/product.query";
 
 class ProductService implements CRUD {
@@ -14,9 +12,6 @@ class ProductService implements CRUD {
         return ProductsDao.deleteProductById(id);
     }
 
-    /**
-     *
-     */
     async list(query: QueryParams) {
         const markerSymbolInfo = <ProductQueryParams> query;
         const searchBySlug = markerSymbolInfo.slug;
@@ -29,10 +24,6 @@ class ProductService implements CRUD {
 
     }
 
-    async patchById(id: string, resource: PatchUserDto): Promise<any> {
-        return ProductsDao.patchUserById(id, resource);
-    }
-
     async putById(id: number, resource: ProductDto): Promise<any> {
         return ProductsDao.updateProduct(id, resource);
     }
@@ -41,9 +32,6 @@ class ProductService implements CRUD {
         return ProductsDao.getProductById(id);
     }
 
-    async getUserByEmail(email: string) {
-        return ProductsDao.getUserByEmail(email);
-    }
 }
 
 export default new ProductService();

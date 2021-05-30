@@ -1,9 +1,9 @@
 import {Arg, Mutation, Query, Resolver} from "type-graphql";
 import {ProductInfo, ProductInput} from '../schemas/product.query';
-import ProductService from '../products/services/products.service';
-import { ProductQueryParams } from "../common/interfaces/product.query";
+import ProductService from '../../products/services/products.service';
+import { ProductQueryParams } from "../../common/interfaces/product.query";
 import { CreateProductResponse, ProductTO } from '../schemas/product.response';
-import { ProductDto } from "../products/dto/product.dto";
+import { ProductDto } from "../../products/dto/product.dto";
 
 
 @Resolver(of => ProductInfo)

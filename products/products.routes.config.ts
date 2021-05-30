@@ -19,10 +19,11 @@ export class ProductsRoutes extends RouterConfigs {
 
         this.app
             .route(`/products/:productId`)
-            // .all(ProductsMiddleware.validateUserExists)
             .get(ProductsController.getProductById)
             .delete( ProductsController.deleteProduct)
-            .put( ProductsController.updateProduct);
+            .put(
+                ProductsMiddleware.validateUpdateProduct,
+                ProductsController.updateProduct);
 
         return this.app;
     }

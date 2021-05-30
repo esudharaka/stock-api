@@ -37,16 +37,26 @@ class ProductsController {
     async updateProduct(req: express.Request, res: express.Response) {
         const productId = req.params.productId;
         const productDto = createProductPutRequest(req, parseInt(productId));
-        const updateResult = await productService.putById(parseInt(productId), productDto);
-        console.log(updateResult);
-        res.status(204).send();
+        const savedProduct = productService.readById(productId);
+        if (!savedProduct) {
+            res.status(404).send(`Product not found to update ${productId}`);
+        } else {
+            const updateResult = await productService.putById(parseInt(productId), productDto);
+            res.status(204).send();
+        }
+
     }
-    //
+
     async deleteProduct(req: express.Request, res: express.Response) {
         const productId = req.params.productId;
-        const deleteResponse = await productService.deleteById(parseInt(productId));
-        console.log(deleteResponse);
-        res.status(204).send();
+        const savedProduct = productService.readById(productId);
+        if (!savedProduct) {
+            res.status(404).send(`Product not found to delete ${productId}`);
+        } else {
+            const deleteResponse = await productService.deleteById(parseInt(productId));
+            res.status(204).send();
+        }
+
     }
 }
 

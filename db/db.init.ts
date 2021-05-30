@@ -4,6 +4,9 @@ import {Sequelize, Model, DataTypes, Optional,
 	BelongsToGetAssociationMixin} from "sequelize";
 
 
+/**
+ * TODO parameterize the DB configs
+ */
 const sequelizeInstance = new Sequelize(
 	'PRODUCTS',
 	'root',
