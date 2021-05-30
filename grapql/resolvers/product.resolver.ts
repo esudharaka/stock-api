@@ -36,8 +36,6 @@ export class ProductResolver {
         };
     }
 
-// {"name":"Test XXX", "slug":"xxx", "sku": "13333", "brand": { "id" : "1"}}
-
     @Mutation(returns => CreateProductResponse)
     async addProduct(@Arg('productData') data: ProductInput): Promise<CreateProductResponse> {
 

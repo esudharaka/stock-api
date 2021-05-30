@@ -62,5 +62,11 @@ const configureServer = async ()=> {
             logger.info(`Routes configured for ${route.getName()}`);
         });
     });
+
+    /**
+     * TODO Create a global error handler
+     */
+
+
 };
 configureServer();

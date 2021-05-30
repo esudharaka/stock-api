@@ -40,6 +40,19 @@ class ProductsDao {
         return createdProduct.ID;
     }
 
+    async addProducts(productDots: ProductDto[]): Promise<any> {
+        return Product.bulkCreate( productDots.map((productDto: ProductDto) => {
+            return {
+                NAME: productDto.name,
+                BRAND_ID: productDto.brand.id,
+                SKU: productDto.sku,
+                SLUG: productDto.slug,
+                CREATED_DATE_TS: new Date(),
+                UPDATED_DATE_TS: new Date(),
+            }
+        }));
+    }
+
     /**
      * TODO configure the logger to log the queries and remove the console log
      */

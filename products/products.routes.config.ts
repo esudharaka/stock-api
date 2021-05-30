@@ -22,8 +22,9 @@ export class ProductsRoutes extends RouterConfigs {
             .get(ProductsController.getProductById)
             .delete( ProductsController.deleteProduct)
             .put(
-                ProductsMiddleware.validateUpdateProduct,
                 ProductsController.updateProduct);
+        this.app.route('/products/uploads')
+            .post(ProductsController.createProductsViaFile);
 
         return this.app;
     }

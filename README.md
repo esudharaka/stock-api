@@ -57,7 +57,9 @@ curl -d '{"name":"Test Product 111", "slug":"xxx", "sku": "13333", "brand": { "i
  
 ## 5.0 Create Multiple Product by CSV
 
-TODO
+```
+curl -d '{"fileLocation":"product_uploads.csv"}' -H "Content-Type: application/json" -X POST http://localhost:3000/products/uploads -v
+```
 
 # GraphQL APIs
 Load the ApolloServer 
