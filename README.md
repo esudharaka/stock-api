@@ -1,8 +1,9 @@
 
-#Stock API 
+
+# Stock API 
 Stock API is responsible of handling the Product and its related things.
 
-#Technologies
+# Technologies
 
 * Node JS 14: Run time
 * Express Js: Restful server
@@ -11,7 +12,7 @@ Stock API is responsible of handling the Product and its related things.
 * GraphQL
 
 # How to setup
-##Pre requisites
+## Pre requisites
 * Install Docker/Docker Compose
 
 ## Running on Dev Mode
@@ -19,35 +20,39 @@ Stock API is responsible of handling the Product and its related things.
 
 Run the following curl to make sure app is started properly
 ```curl -X GET http://localhost:3000```
+```
+If there are any issues like missing dependancies, probabaly do a npm install in root directory and start the
+docker compose.
+```
 
 # Rest API Curls
 
-## 1.0 Get All Products
+### 1.0 Get All Products
 ```
  curl -X GET http://localhost:3000/products
  ```
-## 2.0 Return a single product
-### 2.1 By ID 
+### 2.0 Return a single product
+#### 2.1 By ID 
 ```
  curl -X GET http://localhost:3000/products/<productId>
  ```
-### 2.2 By Sug
+#### 2.2 By Sug
 
 ```
 curl -X GET http://localhost:3000/products?slug=<SLUG>
 ```
-## 3.0 Create a New Product
+### 3.0 Create a New Product
 ```
 curl -d '{"name":"Test XXX", "slug":"xxx", "sku": "13333", "brand": { "id" : "1"}}' -H "Content-Type: application/json" -X POST http://localhost:3000/products
 ```
 
-## 4.0 Delete a Product
+### 4.0 Delete a Product
 ```
 curl -X DELETE http://localhost:3000/products/6
 
 ```
 
-## 5.0 Update a Product
+### 5.0 Update a Product
 ```
 
 curl -d '{"name":"Test Product 111", "slug":"xxx", "sku": "13333", "brand": { "id" : "1"}}' -H "Content-Type: application/json" -X PUT http://localhost:3000/products/1
@@ -55,7 +60,7 @@ curl -d '{"name":"Test Product 111", "slug":"xxx", "sku": "13333", "brand": { "i
  curl http://localhost:3000/products/\?slug\=touch-p 
  
  
-## 5.0 Create Multiple Product by CSV
+### 6.0 Create Multiple Product by CSV
 
 ```
 curl -d '{"fileLocation":"product_uploads.csv"}' -H "Content-Type: application/json" -X POST http://localhost:3000/products/uploads -v
@@ -64,7 +69,7 @@ curl -d '{"fileLocation":"product_uploads.csv"}' -H "Content-Type: application/j
 # GraphQL APIs
 Load the ApolloServer 
 `http://localhost:3000/graphql`
-## 1.0 Add Product
+### 1.0 Add Product
 Add following and do the execution
 ```
 mutation {
@@ -74,7 +79,7 @@ mutation {
 }
 ```
 
-## 2.0 Get Products
+### 2.0 Get Products
 Add following and do the execution
 ```
 {
