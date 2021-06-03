@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "0g": "0.0.6",
+    "apollo-server": "^2.25.0",
     "apollo-server-express": "^2.25.0",
     "argon2": "^0.27.0",
     "class-validator": "^0.11.0",
@@ -29,6 +30,7 @@
     "sequelize": "6.6.2",
     "shortid": "^2.2.16",
     "swagger-express-ts": "^1.1.0",
+    "swagger-ui-express": "^4.1.6",
     "type-graphql": "^0.17.6",
     "winston": "^3.3.3"
   },

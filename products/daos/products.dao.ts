@@ -126,17 +126,35 @@ export  class ProductsDao {
     }
 
     async updateProduct(productId: number, product: ProductDto) {
+        try {
+            const result = await Product.update(
+                {
+                    NAME: product.name,
+                    SLUG: product.slug,
+                    SKU: product.sku,
+                    BRAND_ID: product.brand.id
+                },
+                { where: { ID: productId } }
+            );
+            return result; 
+        } catch (e) {
+            if (e.name === 'SequelizeUniqueConstraintError') {
+                throw new DBError(
+                    ErrorMap.get(ERROR_CODES.DUPLICATE_ENTRIES) || '', ERROR_CODES.DUPLICATE_ENTRIES,
+                    e.sqlMessage);
+            } else if (e.name === 'SequelizeForeignKeyConstraintError') {
+                throw new DBError(
+                    ErrorMap.get(ERROR_CODES.FOREIGN_KEY_CONSTRAINTS) || '', ERROR_CODES.FOREIGN_KEY_CONSTRAINTS,  e.sqlMessage);
 
-        const result = await Product.update(
-            {
-                NAME: product.name,
-                SLUG: product.slug,
-                SKU: product.sku,
-                BRAND_ID: product.brand.id
-            },
-            { where: { ID: productId } }
-        );
-        return result;
+            } else {
+                throw new DBError(
+                    ErrorMap.get(ERROR_CODES.GENERIC_DB_ERROR) || '', ERROR_CODES.DUPLICATE_ENTRIES,
+                    e.sqlMessage);
+            }
+
+        }
+
+        
     }
 
 

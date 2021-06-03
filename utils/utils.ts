@@ -29,7 +29,7 @@ const createProductPutRequest = (req: express.Request, id: number) : ProductDto 
         sku: payload.sku,
         slug: payload.slug,
         brand: {
-            id: payload.id
+            id: payload.brand.id
         },
     };
 };

@@ -18,6 +18,12 @@ import {FileValidationError} from "../../common/exceptions/api.exception";
 
 class ProductsController {
 
+    /**
+     * Get All Products
+     * @param req
+     * @param res
+     * @param next
+     */
     async getAllProducts(req: express.Request, res: express.Response, next: express.NextFunction) {
         const productQueryParams: ProductQueryParams =  createProductQueryObject(req);
         logger.info(`Request received : Get All Products. Query: ${JSON.stringify(productQueryParams)}`);
@@ -29,6 +35,12 @@ class ProductsController {
         }
     }
 
+    /**
+     * Get Product By Id
+     * @param req
+     * @param res
+     * @param next
+     */
     async getProductById(req: express.Request, res: express.Response ,next: express.NextFunction) {
         const productId = req.params.productId;
         try {
@@ -44,6 +56,12 @@ class ProductsController {
 
     }
 
+    /**
+     * Create Product
+     * @param req
+     * @param res
+     * @param next
+     */
     async createProduct(req: express.Request, res: express.Response, next: express.NextFunction) {
         try {
             const productRequest = createProductDtoFromRequest(req);
@@ -57,10 +75,17 @@ class ProductsController {
 
     }
 
+    /**
+     * Update Product
+     * @param req
+     * @param res
+     * @param next
+     */
     async updateProduct(req: express.Request, res: express.Response,next: express.NextFunction) {
         try {
             const productId = req.params.productId;
             const productDto = createProductPutRequest(req, parseInt(productId));
+            logger.info(`Create product request: ${JSON.stringify(productDto)}`);
             const savedProduct = await productService.readById(productId);
             if (!savedProduct) {
                 res.status(404).send(`Product not found to update ${productId}`);
@@ -75,6 +100,12 @@ class ProductsController {
 
     }
 
+    /**
+     * delete Product
+     * @param req
+     * @param res
+     * @param next
+     */
     async deleteProduct(req: express.Request, res: express.Response, next: express.NextFunction) {
         try {
             const productId = req.params.productId;
@@ -93,6 +124,12 @@ class ProductsController {
     }
 
 
+    /**
+     * Create products from CSV. This method will accept the request and process it async
+     * @param req
+     * @param res
+     * @param next
+     */
     async createProductsViaFile(req: express.Request, res: express.Response, next: express.NextFunction) {
         const fileUploadRequest = <FileUploadRequest> req;
 

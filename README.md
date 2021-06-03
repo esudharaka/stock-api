@@ -26,7 +26,8 @@ docker compose.
 ```
 
 ## API Design Document
-Please copy the content of stock_api_definitions.json to https://editor.swagger.io/
+http://localhost:3000/api-docs/
+
 
 # Rest API Curls
 

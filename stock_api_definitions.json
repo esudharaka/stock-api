@@ -5,8 +5,8 @@
     "version": "1.0.0",
     "title": "Stock API"
   },
-  "host": "virtserver.swaggerhub.com",
-  "basePath": "/esudharaka/stock-api/1.0.0",
+  "host": "localhost:3000",
+  "basePath": "/",
   "schemes": [
     "https",
     "http"
@@ -155,6 +155,35 @@
           }
         }
       }
+    },
+    "/products/uploads": {
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Upload csv",
+        "operationId": "uploadProducts",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "The CSV file to upload.",
+            "required": false,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accept file for async processing"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -195,15 +224,6 @@
       },
       "xml": {
         "name": "Brand"
-      }
-    },
-    "ProductCreationResponse": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int32"
-        }
       }
     }
   },

@@ -1,4 +1,5 @@
 import {Arg, Mutation, Query, Resolver} from "type-graphql";
+import { UserInputError } from 'apollo-server';
 import {ProductInfo, ProductInput} from '../schemas/product.query';
 import ProductService from '../../services/products.service';
 import { ProductQueryParams } from "../../../common/interfaces/product.query";
@@ -47,9 +48,19 @@ export class ProductResolver {
                 id: brand.id
             }
         };
-        const productId = await ProductService.create(productDto);
-        return  {
-            id: productId
-        };
+
+        try {
+            const productId = await ProductService.create(productDto);
+            return  {
+                id: productId
+            };
+        } catch (e) {
+            throw new UserInputError(e.message, {
+                code: e.code,
+                additionalInfo: e.additionalInfo
+            });
+        }
+        
+
     }
 }

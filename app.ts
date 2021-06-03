@@ -1,5 +1,9 @@
 import "reflect-metadata";
 import express from 'express';
+const swaggerUi = require("swagger-ui-express");
+const fs = require('fs');
+const swaggerDoc = JSON.parse(fs.readFileSync('stock_api_definitions.json', 'utf8'));
+
 const fileUpload = require('express-fileupload');
 import * as winston from 'winston';
 import * as expressWinston from 'express-winston';
@@ -57,9 +61,18 @@ const configureServer = async ()=> {
         res.status(200).send(runningMessage)
     });
 
+    /**
+     * Swagger setup
+     */
+    app.use(
+        '/api-docs',
+        swaggerUi.serve,
+        swaggerUi.setup(swaggerDoc)
+    );
 
     const server = new ApolloServer({
-        schema
+        schema,
+        debug: false,
     });
     server.applyMiddleware({ app });
     /**
