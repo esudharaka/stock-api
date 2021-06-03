@@ -14,8 +14,8 @@ class ProductsMiddleware {
             _.isEmpty(slug) ||
             _.isEmpty(brandId)) {
             res.status(400).send({
-                            error: `Missing required fields`,
-                        });
+                error: `Missing required fields`,
+            });
         } else {
             next();
         }

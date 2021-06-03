@@ -1,14 +1,13 @@
 import {Arg, Mutation, Query, Resolver} from "type-graphql";
 import {ProductInfo, ProductInput} from '../schemas/product.query';
-import ProductService from '../../products/services/products.service';
-import { ProductQueryParams } from "../../common/interfaces/product.query";
+import ProductService from '../../services/products.service';
+import { ProductQueryParams } from "../../../common/interfaces/product.query";
 import { CreateProductResponse, ProductTO } from '../schemas/product.response';
-import { ProductDto } from "../../products/dto/product.dto";
+import { ProductDto } from "../../dto/product.dto";
 
 
 @Resolver(of => ProductInfo)
 export class ProductResolver {
-    // private todos: ProductInfo[] = [];
 
     @Query(returns => ProductInfo, { nullable: true })
     async returnProducts(): Promise<ProductInfo> {

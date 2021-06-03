@@ -2,6 +2,8 @@ import { ProductDto } from '../dto/product.dto';
 import { Product, ProductInstance } from "../../db/models/product.model";
 import { Brand } from "../../db/models/brand.model";
 import { BrandDto } from "../dto/brand.dto";
+import { DBError } from "../../common/exceptions/api.exception";
+import { ERROR_CODES, ErrorMap } from "../../common/error.map";
 
 
 
@@ -22,35 +24,62 @@ const extractProductsFromDbResults = (result: Array<ProductInstance>) => {
     });
 };
 
-class ProductsDao {
+export  class ProductsDao {
     constructor() {
     }
 
-    async addProduct(productDto: ProductDto) : Promise<number> {
+    async addProduct(productDto: ProductDto) : Promise<any> {
 
-        const createdProduct = await Product.create( {
-            NAME: productDto.name,
-            BRAND_ID: productDto.brand.id,
-            SKU: productDto.sku,
-            SLUG: productDto.slug,
-            CREATED_DATE_TS: new Date(),
-            UPDATED_DATE_TS: new Date(),
-        });
-
-        return createdProduct.ID;
-    }
-
-    async addProducts(productDots: ProductDto[]): Promise<any> {
-        return Product.bulkCreate( productDots.map((productDto: ProductDto) => {
-            return {
+        try {
+            const createdProduct = await Product.create( {
                 NAME: productDto.name,
                 BRAND_ID: productDto.brand.id,
                 SKU: productDto.sku,
                 SLUG: productDto.slug,
                 CREATED_DATE_TS: new Date(),
                 UPDATED_DATE_TS: new Date(),
+            });
+
+            return createdProduct.ID;
+        } catch (e) {
+            if (e.name === 'SequelizeUniqueConstraintError') {
+                throw new DBError(
+                    ErrorMap.get(ERROR_CODES.DUPLICATE_ENTRIES) || '', ERROR_CODES.DUPLICATE_ENTRIES,
+                    e.sqlMessage);
+            } else {
+                throw new DBError(
+                    ErrorMap.get(ERROR_CODES.GENERIC_DB_ERROR) || '', ERROR_CODES.DUPLICATE_ENTRIES,
+                    e.sqlMessage);
             }
-        }));
+        }
+
+
+    }
+
+    async addProducts(productDots: ProductDto[]): Promise<any> {
+        try {
+            return Product.bulkCreate( productDots.map((productDto: ProductDto) => {
+                return {
+                    NAME: productDto.name,
+                    BRAND_ID: productDto.brand.id,
+                    SKU: productDto.sku,
+                    SLUG: productDto.slug,
+                    CREATED_DATE_TS: new Date(),
+                    UPDATED_DATE_TS: new Date(),
+                }
+            }));
+        } catch (e) {
+            if (e.code === 'ER_DUP_ENTRY') {
+                throw new DBError(
+                    ErrorMap.get(ERROR_CODES.DUPLICATE_ENTRIES) || '', ERROR_CODES.DUPLICATE_ENTRIES,
+                    e.sqlMessage);
+            } else {
+                throw new DBError(
+                    ErrorMap.get(ERROR_CODES.GENERIC_DB_ERROR) || '', ERROR_CODES.DUPLICATE_ENTRIES,
+                    e.sqlMessage);
+            }
+        }
+
     }
 
     /**

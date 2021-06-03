@@ -24,8 +24,9 @@ export class ProductsRoutes extends RouterConfigs {
             .put(
                 ProductsController.updateProduct);
         this.app.route('/products/uploads')
-            .post(ProductsController.createProductsViaFile);
-
+            .post(
+                ProductsController.createProductsViaFile
+            );
         return this.app;
     }
 }

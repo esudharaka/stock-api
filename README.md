@@ -25,6 +25,9 @@ If there are any issues like missing dependancies, probabaly do a npm install in
 docker compose.
 ```
 
+## API Design Document
+Please copy the content of stock_api_definitions.json to https://editor.swagger.io/
+
 # Rest API Curls
 
 ### 1.0 Get All Products
@@ -39,13 +42,14 @@ docker compose.
 #### 2.2 By Sug
 
 ```
-curl -X GET http://localhost:3000/products?slug=<SLUG>
+curl -X GET http://localhost:3000/products?slug=xxx
 ```
 ### 3.0 Create a New Product
-```
-curl -d '{"name":"Test XXX", "slug":"xxx", "sku": "13333", "brand": { "id" : "1"}}' -H "Content-Type: application/json" -X POST http://localhost:3000/products
-```
 
+```
+curl -d '{"name":"Test XXX", "slug":"xxx", "sku": "htt2", "brand": { "id" : "1"}}' -H "Content-Type: application/json" -X POST http://localhost:3000/products
+```
+/ / status 406
 ### 4.0 Delete a Product
 ```
 curl -X DELETE http://localhost:3000/products/6
@@ -61,9 +65,10 @@ curl -d '{"name":"Test Product 111", "slug":"xxx", "sku": "13333", "brand": { "i
  
  
 ### 6.0 Create Multiple Product by CSV
-
+Please note that you will have to change the file location
 ```
-curl -d '{"fileLocation":"product_uploads.csv"}' -H "Content-Type: application/json" -X POST http://localhost:3000/products/uploads -v
+curl --location --request POST 'http://localhost:3000/products/uploads' \
+--form 'file=@"/Users/eshansudharaka/Documents/Personal/sample/stock-api/product_uploads.csv"' -v
 ```
 
 # GraphQL APIs
@@ -94,3 +99,8 @@ Add following and do the execution
     }
   }
 }
+```
+## How to run test case
+```
+npm run test
+```

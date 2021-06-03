@@ -10,19 +10,24 @@ create table if not exists BRAND
 	UPDATED_DATE_TS timestamp null
 );
 
-create table if not exists PRODUCT
+create table if not exists PRODUCTS.PRODUCT
 (
 	ID int auto_increment
 		primary key,
 	NAME varchar(255) not null,
-	SLUG varchar(30) null,
+	SLUG varchar(30) not null,
 	SKU varchar(20) not null,
 	BRAND_ID int not null,
 	CREATED_DATE_TS timestamp null,
 	UPDATED_DATE_TS timestamp null,
+	constraint PRODUCT_SKU_uindex
+		unique (SKU),
+	constraint PRODUCT_SLUG_uindex
+		unique (SLUG),
 	constraint PRODUCT_BRAND_ID_fk
-		foreign key (BRAND_ID) references BRAND (ID)
+		foreign key (BRAND_ID) references PRODUCTS.BRAND (ID)
 );
+
 
 create index PRODUCT_SKU_index
 	on PRODUCT (SKU);

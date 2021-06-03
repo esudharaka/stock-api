@@ -1,5 +1,6 @@
 import "reflect-metadata";
 import express from 'express';
+const fileUpload = require('express-fileupload');
 import * as winston from 'winston';
 import * as expressWinston from 'express-winston';
 import { ApolloServer } from "apollo-server-express";
@@ -8,7 +9,8 @@ import cors from 'cors';
 import { RouterConfigs } from './common/routerConfigs';
 import { ProductsRoutes } from './products/products.routes.config';
 import { logger } from './utils\/app.logger'
-import { ProductResolver } from "./grapql/resolvers/product.resolver";
+import { ProductResolver } from "./products/grapql/resolvers/product.resolver";
+import GlobalErrorHandler  from './global.error.handler';
 
 
 
@@ -43,6 +45,9 @@ const configureServer = async ()=> {
     });
 
     app.use(expressWinston.logger(loggerOptions));
+    app.use(fileUpload({
+        createParentPath: true
+    }));
 
 // Registering the routes
     routes.push(new ProductsRoutes(app));
@@ -57,16 +62,16 @@ const configureServer = async ()=> {
         schema
     });
     server.applyMiddleware({ app });
+    /**
+     * Express Global Exception handler
+     */
+    app.use(GlobalErrorHandler.handler);
     app.listen(port, () => {
         routes.forEach((route: RouterConfigs) => {
             logger.info(`Routes configured for ${route.getName()}`);
         });
+
     });
-
-    /**
-     * TODO Create a global error handler
-     */
-
 
 };
 configureServer();
