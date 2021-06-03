@@ -49,7 +49,7 @@ curl -X GET http://localhost:3000/products?slug=xxx
 ```
 curl -d '{"name":"Test XXX", "slug":"xxx", "sku": "htt2", "brand": { "id" : "1"}}' -H "Content-Type: application/json" -X POST http://localhost:3000/products
 ```
-/ / status 406
+
 ### 4.0 Delete a Product
 ```
 curl -X DELETE http://localhost:3000/products/6
